@@ -18,6 +18,14 @@ function deleteItem(e) {
     render();
 }
 
+function duplicateItem(e) {
+    const index = e.target.parentNode.getAttribute('id');
+    const text = todos[index];
+
+    todos.splice(index, 0, text);
+    render();
+}
+
 function render() {
     list.innerHTML = '';
     todos.forEach(renderElement);
@@ -26,7 +34,11 @@ function render() {
 
 function setHandlers() {
     list.querySelectorAll('.delete').forEach((button) => {
-        button.addEventListener('click', deleteItem)
+        button.addEventListener('click', deleteItem);
+    })
+
+    list.querySelectorAll('.duplicate').forEach((button) => {
+        button.addEventListener('click', duplicateItem)
     })
 }
 
