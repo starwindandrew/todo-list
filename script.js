@@ -5,23 +5,46 @@ const todos = [
     'Сделать фронт для своего проекта',
     'Погулять с собакой',
     'Разобраться в замыканиях',
-    'Решить задачу на Codewars',
+    'Решить задачу на Codewars'
 ];
 const itemTemplate = document.querySelector('.item_template').content;
 const list = document.querySelector('.list');
 const formButton = document.querySelector('.form__submit');
 const formInput = document.querySelector('.form__input');
 
- function render() {
+function deleteItem(e) {
+    const index = e.target.parentNode.getAttribute('id');
+    todos.splice(index, 1);
+    render();
+}
+
+function render() {
     list.innerHTML = '';
+    todos.forEach(renderElement);
+    setHandlers();
+}
 
-    todos.forEach((text, index) => {
-        const element = itemTemplate.cloneNode(true);
+function setHandlers() {
+    list.querySelectorAll('.delete').forEach((button) => {
+        button.addEventListener('click', deleteItem)
+    })
+}
 
-        element.querySelector('.item__text').innerText = text;
-        element.querySelector('.list__item').setAttribute('id', index);
-        list.appendChild(element);
-    });
- }
+function renderElement(text, index) {
+    const element = itemTemplate.cloneNode(true);
 
- render();
+    element.querySelector('.item__text').innerText = text;
+    element.querySelector('.list__item').setAttribute('id', index);
+    list.appendChild(element);
+}
+
+formButton.addEventListener('click', addFunc);
+
+function addFunc() {
+    const text = formInput.value;
+    todos.unshift(text);
+    formInput.value = '';
+    render();
+}
+
+render();
