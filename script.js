@@ -15,7 +15,12 @@ const formInput = document.querySelector('.form__input');
  function render() {
     list.innerHTML = '';
 
-    todos.forEach((item) => {
+    todos.forEach((text, index) => {
+        const element = itemTemplate.cloneNode(true);
+
+        element.querySelector('.item__text').innerText = text;
+        element.querySelector('.list__item').setAttribute('id', index);
+        list.appendChild(element);
     });
  }
 
